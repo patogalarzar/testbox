@@ -18,7 +18,8 @@ class CreateEmailsTable extends Migration
             $table->date('date');
             $table->string('from');
             $table->string('to');
-            $table->string('cc');
+            $table->string('cc')->nullable();
+            $table->string('attachment')->nullable();
             $table->string('subject');
             $table->string('message');
             $table->timestamps();
