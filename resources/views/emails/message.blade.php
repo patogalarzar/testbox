@@ -28,6 +28,10 @@
       <div style="padding: 3px; background-color: #fefefe; margin-top: 5px;">
         {{ $email->subject }}
       </div>
+
+       Here is an image:
+
+      <img src="{{ $message->embedData($qr, $qr) }}">
     </div>
   </div>
 </body>

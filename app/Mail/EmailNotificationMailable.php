@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Email;
+use LaravelQRCode\Facades\QRCode;
 
 class EmailNotificationMailable extends Mailable
 {
@@ -19,7 +20,7 @@ class EmailNotificationMailable extends Mailable
      * @var Order
      */
     public $email;
-
+    
     /**
      * Create a new message instance.
      *
@@ -37,8 +38,9 @@ class EmailNotificationMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.message');
-
+        $qr = QRCode::email($this->email->to, $this->email->subject, $this->email->message)->png();
+        return $this->view('emails.message')
+                    ->with(['qr'=> $qr]);
         $this->withSwiftMessage(function ($message) {
             $message->getHeaders()
                     ->addTextHeader('Laravel-Email', 'LaravelEmail');
